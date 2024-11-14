@@ -7,20 +7,16 @@ def entradaVeiculo():
             if lotacao[i][j] == False:
                 lotacao[i][j] = True
                 print("O seu veiculo está na Fila:", i+1,"Ocupação:", j+1)
-                break
-            else:
-                count+=1 
-        break
+                return 
 
-    if count == 15:
-        print("Parque Completo")
+    print("Parque Completo")
 
 def saidaVeiculo(filaVeiculo,ocupacaoVeiculo):
-    if lotacao[filaVeiculo-1][ocupacaoVeiculo-1] == True:
-        lotacao[filaVeiculo-1],[ocupacaoVeiculo-1] = False
-        return("Boa Viagem!")
+    if lotacao[filaVeiculo][ocupacaoVeiculo] == True:
+        lotacao[filaVeiculo][ocupacaoVeiculo] = False
+        print("Boa Viagem!")
     else:
-        return("Esse lugar não está ocupado! :/")
+        print("Esse lugar não está ocupado! :/")
     
     
 def estadoParque():
@@ -28,9 +24,10 @@ def estadoParque():
     livres = 0
     for i in range(len(lotacao)):
         for j in range(len(lotacao[i])):
-            ocupados += lotacao[i,j].count(True)
+            if lotacao[i][j] == True:
+                ocupados += 1
     livres = 15-ocupados
-    print("Nº de Lugares Ocupados: {:n} \nNº de Lugares Livres: {:n}".format(ocupados,livres))
+    print("\nNº de Lugares Ocupados: {:n} \nNº de Lugares Livres: {:n}".format(ocupados,livres))
 
 
 
@@ -55,9 +52,11 @@ while not programa:
             case 1:
                 entradaVeiculo()
             case 2:
-                filaVeiculo = int(input("Introduza a fila do veiculo: "))
-                ocupacaoVeiculo = int(input("Introduza a ocupação do veiculo"))
-                print(saidaVeiculo(filaVeiculo,ocupacaoVeiculo))
+                filaVeiculo = int(input("Introduza a fila do veiculo: "))-1
+    
+                ocupacaoVeiculo = int(input("Introduza a ocupação do veiculo: "))-1
+                
+                saidaVeiculo(filaVeiculo,ocupacaoVeiculo)
             case 3:
                 estadoParque()
             case 0:
