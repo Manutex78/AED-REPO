@@ -27,7 +27,7 @@ def window(pathImages,imagem):
                 pixelMap[i,j] = (red, green, blue)
             
     imagem.show()
-#imagem.save(pathImages+'teste.jpg')
+    imagem.save(pathImages+'window.jpg')
 
 pathImages = ".\\Images\\"
 newSize = (400,400)
