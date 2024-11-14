@@ -17,7 +17,7 @@ def imagemModlura(pathImages,imagem):
                 pixelMap[i,j] = (red, green, blue)
             
     imagem.show()
-#imagem.save(pathImages+'teste.jpg')
+    imagem.save(pathImages+'teste.jpg')
 
 pathImages = ".\\Images\\"
 newSize = (400,400)

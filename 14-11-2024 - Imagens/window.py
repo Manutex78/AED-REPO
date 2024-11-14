@@ -6,25 +6,13 @@ def window(pathImages,imagem):
     for i in range(imagem.width):
         for j in range(imagem.height):
             if j < 10 or j > imagem.height-10:
-                red=random.randint(0,255)
-                green=random.randint(0,255)
-                blue =random.randint(0,255)
-                pixelMap[i,j] = (red, green, blue)
+                pixelMap[i,j] = (0,0,255)
             elif j > ((imagem.height/2)-5) and j < ((imagem.height/2)+5):
-                red=random.randint(0,255)
-                green=random.randint(0,255)
-                blue =random.randint(0,255)
-                pixelMap[i,j] = (red, green, blue)
-            elif i < 10 or i > imagem.width-10:
-                red=random.randint(0,255)
-                green=random.randint(0,255)
-                blue =random.randint(0,255)           
-                pixelMap[i,j] = (red, green, blue)
+                pixelMap[i,j] = (0,0,255)
+            elif i < 10 or i > imagem.width-10:           
+                pixelMap[i,j] = (0,0,255)
             elif i > ((imagem.width/2)-5) and i < ((imagem.width/2)+5):
-                red=random.randint(0,255)
-                green=random.randint(0,255)
-                blue =random.randint(0,255)
-                pixelMap[i,j] = (red, green, blue)
+                pixelMap[i,j] = (0,0,255)
             
     imagem.show()
     imagem.save(pathImages+'window.jpg')
