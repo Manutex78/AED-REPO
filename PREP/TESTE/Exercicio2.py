@@ -10,7 +10,6 @@ import os                        # diretório atual
 # Numero :
 # Ñome:
 
-
 #Retorna o caminho absoluto do ficheiro Python atualmente em execução.
 root_dir = os.path.dirname(os.path.abspath(__file__))
 #Altera o diretório atual para o diretório do ficheiro python
@@ -25,9 +24,21 @@ def lerFicheiro(ficheiro):
     file.close()
     return lista
 
+def textBoxFavoritos():
+    """
+    Função que lê o ficheiro favoritos.txt e retorna o conteúdo do ficheiro
+    """
+    if not os.path.exists("ficheiros/favoritos.txt"):
+        return ""
+    else:
+        file = open("ficheiros/favoritos.txt", "r", encoding="utf-8")
+        textBox = file.read()
+        file.close()
+        return textBox
+
 
 # ESCREVER AQUI AS FUNÇÕES SOLICITADAS NO ENUNCIADO
-#-----------------------------------------------------
+#----------------------------------------------------
 
 def ViewTrails(c1, c2):
     """
@@ -38,26 +49,35 @@ def ViewTrails(c1, c2):
 
     if c1 == "1" and c2 == "0":                     # Trail Curto
         listaTrails = lerFicheiro("ficheiros/trails.txt")
+        numProvas = len(listaTrails)
         for linha in listaTrails:
             campos = linha.split(";")
             tree.insert("", "end", values=(campos[0], campos[1], campos[2], campos[3]))
     elif c1 == "0" and c2 == "1":                   # Ultra Trail
         listaUltraTrails = lerFicheiro("ficheiros/ultratrails.txt")
+        numProvas = len(listaUltraTrails)
         for linha in listaUltraTrails:
             campos = linha.split(";")
             tree.insert("", "end", values=(campos[0], campos[1], campos[2], campos[3]))
     elif c1 == "1" and c2 == "1":                   # Trail Curto e Ultra Trail
         listaTrails = lerFicheiro("ficheiros/trails.txt")
+        numProvas = len(listaTrails)
         for linha in listaTrails:
             campos = linha.split(";")
             tree.insert("", "end", values=(campos[0], campos[1], campos[2], campos[3]))
         listaUltraTrails = lerFicheiro("ficheiros/ultratrails.txt")
+        numProvas += len(listaUltraTrails)
         for linha in listaUltraTrails:
             campos = linha.split(";")
             tree.insert("", "end", values=(campos[0], campos[1], campos[2], campos[3]))
     else:
         CTkMessagebox.CTkMessagebox(app, width=200, height=100, title="Erro", message="Selecione pelo menos uma opção", icon="cancel")
-    
+
+    txtNumProvas.configure(state="normal")
+    txtNumProvas.delete(0, "end")
+    txtNumProvas.insert(0, numProvas)
+    txtNumProvas.configure(state="readonly")
+
 def ordAsc(tree):
     """
     Função que ordena a treeview por ordem crescente
@@ -67,8 +87,6 @@ def ordAsc(tree):
     for index, (val, k) in enumerate(items):
         tree.move(k, "", index)
     
-    
-
 def ordDesc(tree):
     """
     Função que ordena a treeview por ordem decrescente
@@ -78,8 +96,6 @@ def ordDesc(tree):
     for index, (val, k) in enumerate(items):
         tree.move(k, "", index)
     
-    
-
 def notificacoes(tree):
     """
     Função que deve abrir uma messagebox notificando o utilizador da prova
@@ -105,8 +121,6 @@ def notificacoes(tree):
     if closest_event:
         CTkMessagebox.CTkMessagebox(app, width=200, height=100, title="Notificação", message=f"Prova mais próxima: {closest_event[0]}", icon="info")
     
-    
-
 def selecionarImagem():
     """
     Função que permite ao utilizador selecionar uma imagem da pasta Imagens
@@ -116,7 +130,6 @@ def selecionarImagem():
     img = customtkinter.CTkImage(Image.open(f'{filename}'), size=(180, 180))
     btnImagem.configure(image=img)
     
-
 def addFavoritos(linha):
     """
     Função que adiciona a prova selecionada na Tree à lista de favoritos.
@@ -133,7 +146,6 @@ def filefavoritos(textBox):
     file.write(textBox)
     file.close()
     
-
 #----------------------------------------------------
 # GUI  INTERFACE GRAFICA -----------------------------------------------
 #----------------------------------------------------
@@ -252,8 +264,9 @@ frame1.place(x=700, y=1)
 lblFav= customtkinter.CTkLabel(frame1, text = "Favoritos", font = ("Helvetica", 14) )
 lblFav.place(x=100, y=30)
 
-lboxFav = customtkinter.CTkTextbox(frame1, width=250, height=250, fg_color="gray", text_color="white")
+lboxFav = customtkinter.CTkTextbox(frame1,width=250, height=250, fg_color="gray", text_color="white")
 lboxFav.place(x=20, y=60)
+lboxFav.insert("end", textBoxFavoritos())
 
 # 2.9 Deve invocar a função filefavoritos 
 imgFavorite = ImageTk.PhotoImage(file = ".\\imagens\\GuardarFile.png")
